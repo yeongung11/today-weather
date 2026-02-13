@@ -18,3 +18,53 @@
 
 -   npm install
 -   npm run dev
+
+Trouble Shooting
+
+### 1.
+
+에러 코드
+
+-   `import.meta.env.VITE_OWM_API_KEY`가 `undefined`로 찍혀 화면에 표시 되지 않았음.
+
+원인
+
+-   `.env` 파일을 프로젝트 루트인 `today-weather`에 넣고 `dev` 서버를 재시작 해야했지만 프로젝트 루트 바깥에 `.env` 파일을 생성.
+
+해결
+
+-   `today-weather` 폴더 안에 `.env` 파일을 넣고 `dev` 서버 재시작
+
+### 2.
+
+에러코드
+
+-   `Cannot read properties of undefined (reading 'temp')` 렌더링 에러 `weatherData.main.temp`에 접근시 `undefined`에러
+
+원인
+
+-   API가 응답하기 전에 초기 렌더링에서 `null` 접근
+
+해결
+
+1. 로딩 조건문을 추가
+   1-1. `if(loading)` + `if(!weatherData)` 조건문 추가
+2. 옵셔널 체이닝
+   2-1. `{weatherData?.main?.temp?.toFixed(1) || "정보 없음"}`
+
+-   로딩 조건문과 옵셔널 체이닝을 항상 사용함으로써 해결
+
+### 3.
+
+에러코드
+
+-   `Cannot access 'weather' before initialization` 구조 분해 에러
+
+원인
+
+-   초기 렌더링 `useState(null)` 때문에 `weatherData = null`이 됐고 그 상태로 구조 분해를 시도해서 TDZ 문제
+-   `const`는 호이스팅 되지만 초기화 전에 접근
+
+해결
+
+-   데이터 체크, 구조 분해, 렌더링 순으로 순서를 지키서 구조 분해는 조건문 아래 쓰는 등 ESLint 규칙 엄수
