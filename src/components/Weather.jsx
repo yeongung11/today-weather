@@ -18,12 +18,25 @@ export default function Weather() {
             {weatherData && (
                 <div>
                     <h2>{weatherData.name}</h2>
-                    <p>현재 기온 : {weatherData.main.temp}</p>
+                    <p>현재 기온 : {weatherData.main.temp.toFixed(1)} °C</p>
                     <p>현재 상태 : {weatherData.weather[0].description}</p>
-                    <p>현재 상태 : {weatherData.weather[0].icon}</p>
+                    <p>
+                        체감 온도 : {weatherData.main.feels_like.toFixed(1)} °C
+                    </p>
+                    <p>습도 : {weatherData.main.humidity} %</p>
+                    <p>
+                        가시거리 :{" "}
+                        {weatherData?.visibility != null
+                            ? `${(weatherData.visibility / 1000).toFixed(1)} km`
+                            : "-"}
+                    </p>
+                    <img
+                        src={`http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
+                        alt="Weather icon"
+                    />
                 </div>
             )}
-            {/* <h1>{JSON.stringify(weatherData.null, 2)}</h1> */}
+            {!weatherData && <p>날씨 정보가 없습니다</p>}
         </>
     );
 }
