@@ -39,3 +39,13 @@ export const OtherCity = (city = "Seoul") =>
     fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${OWM_API_KEY}&units=metric&lang=kr`,
     ).then((res) => res.json());
+
+export const getWeatherByCoords = async (lat, lng) => {
+    const url =
+        `${OWM_BASE_URL}/data/2.5/weather?lat=${lat}&lon=${lng}` +
+        `&appid=${OWM_API_KEY}&units=metric&lang=kr`;
+
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`날씨 오류 ${res.status}`);
+    return res.json();
+};

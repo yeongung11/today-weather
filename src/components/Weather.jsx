@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { SeoulWeather } from "../api/openweather";
+import { OtherCity, SeoulWeather } from "../api/openweather";
 import MyLocationComp from "./MyLocationComp";
 
 export default function Weather() {
@@ -7,6 +7,7 @@ export default function Weather() {
     // const [newCity, setNewCity] = useState("Seoul,KR");
     const [location, setLocation] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [switch, setSwitch] = useState("my");
 
     // 위치 불러오기
     useEffect(() => {
@@ -49,8 +50,12 @@ export default function Weather() {
 
     return (
         <>
-            <h1>{weather.name}</h1>
+            <div>
+                <button onClick={() => setSwitch("my")}>현재 위치</button>
+                <button onClick={() => setSwitch("city")}>다른 도시</button>
+            </div>
             <MyLocationComp />
+            {switch === "my" ? <MyLocationComp /> : <OtherCity />}
             {weather && (
                 <div>
                     <div>
@@ -69,6 +74,7 @@ export default function Weather() {
                     <h3>
                         ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
                     </h3>
+                    <h1>{weather.name}</h1>
                     <p>체감 온도 : {weather.main.feels_like.toFixed(1)} °C</p>
                     <p>습도 : {weather.main.humidity} %</p>
                     <p>현재 상태 : {weather.weather[0].description}</p>
@@ -116,6 +122,7 @@ export default function Weather() {
                     </p>
                 </div>
             )}
+            
         </>
     );
 }
