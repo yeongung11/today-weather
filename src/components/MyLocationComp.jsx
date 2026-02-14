@@ -48,7 +48,7 @@ export default function MyLocationComp() {
 
     return (
         <div>
-            <p>{place?.name ?? "로딩중"}</p>
+            <p>{place?.name_ko ?? "로딩중"}</p>
             {/* <p>국가: {place?.country ?? "-"}</p>
             <p>지역: {place?.state ?? "-"}</p>
             <p>

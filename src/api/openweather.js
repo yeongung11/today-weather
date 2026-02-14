@@ -27,11 +27,15 @@ export const MyLocation = async (lat, lng) => {
     if (!resMyLocation.ok)
         throw new Error(`reverseGeo 오류 ${resMyLocation.status}`);
     const data = await resMyLocation.json(); // 배열
-    return data?.[0] ?? null;
+    const place = data?.[0] ?? null;
+    return {
+        ...place,
+        name_ko: place?.local_names?.ko ?? place?.name ?? null,
+    };
 };
 
 // 다른 도시
 export const OtherCity = (city = "Seoul") =>
     fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${OWM_API_KEY}&units=metric`,
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${OWM_API_KEY}&units=metric&lang=kr`,
     ).then((res) => res.json());
