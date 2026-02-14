@@ -1,19 +1,40 @@
 import { OWM_API_KEY, OWM_BASE_URL } from "../library/env";
 
-export async function SeoulWeather(city = "Seoul,KR") {
-    // 날씨
-    const weatherUrl = `${OWM_BASE_URL}/data/2.5/weather?q=${city}&appid=${OWM_API_KEY}&units=metric&lang=kr`;
-    const resWeather = await fetch(weatherUrl);
-    if (!resWeather.ok) throw new Error(`API 오류${resWeather.status}`);
-    const weather = await resWeather.json();
-    // return resWeather.json();
+// export async function SeoulWeather(city = "Seoul,KR") {
+//     // 날씨
+//     const weatherUrl = `${OWM_BASE_URL}/data/2.5/weather?q=${city}&appid=${OWM_API_KEY}&units=metric&lang=kr`;
+//     const resWeather = await fetch(weatherUrl);
+//     if (!resWeather.ok) throw new Error(`API 오류${resWeather.status}`);
+//     const weather = await resWeather.json();
+//     // return resWeather.json();
 
-    // 미세먼지
+//     // 미세먼지
+
+//     const { lat, lon } = weather.coord;
+//     const AirPollutionUrl = `${OWM_BASE_URL}/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${OWM_API_KEY}`;
+//     const resAir = await fetch(AirPollutionUrl);
+//     if (!resAir.ok) throw new Error(`API 오류 ${resAir.status}`);
+//     const air = await resAir.json();
+
+//     return { weather, air };
+// }
+
+export async function SeoulWeather(param = "Seoul") {
+    let weatherUrl;
+    if (typeof param === "number") {
+        weatherUrl = `${OWM_BASE_URL}/data/2.5/weather?id=${param}&appid=${OWM_API_KEY}&units=metric&lang=kr`;
+    } else {
+        weatherUrl = `${OWM_BASE_URL}/data/2.5/weather?q=${param}&appid=${OWM_API_KEY}&units=metric&lang=kr`;
+    }
+
+    const resWeather = await fetch(weatherUrl);
+    if (!resWeather.ok) throw new Error(`API 오류 ${resWeather.status}`);
+    const weather = await resWeather.json();
 
     const { lat, lon } = weather.coord;
-    const AirPollutionUrl = `${OWM_BASE_URL}/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${OWM_API_KEY}`;
-    const resAir = await fetch(AirPollutionUrl);
-    if (!resAir.ok) throw new Error(`API 오류 ${resAir.status}`);
+    const airUrl = `${OWM_BASE_URL}/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${OWM_API_KEY}`;
+    const resAir = await fetch(airUrl);
+    if (!resAir.ok) throw new Error(`미세먼지 API 오류 ${resAir.status}`);
     const air = await resAir.json();
 
     return { weather, air };
