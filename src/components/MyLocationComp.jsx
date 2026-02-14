@@ -34,7 +34,7 @@ export default function MyLocationComp() {
                 };
                 setLocation(coords);
 
-                // 역지오코딩 호출!
+                // 역지오코딩 호출
                 try {
                     const placeData = await MyLocation(coords.lat, coords.lng);
                     setPlace(placeData); // { name: "Anyang-si", country: "KR" }
