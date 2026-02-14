@@ -3,14 +3,15 @@ import { getWeatherByCoords, MyLocation } from "../api/openweather";
 
 export default function MyLocationComp() {
     const [location, setLocation] = useState(null);
-    const [place, setPlace] = useState(null); // 지역명 저장
-    const [weather, setWeather] = useState(null); // 지역명 저장
-    const [loading, setLoading] = useState(null); // 지역명 저장
+    const [place, setPlace] = useState(null);
+    const [weather, setWeather] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (!navigator.geolocation) return;
+
         navigator.geolocation.getCurrentPosition(
-            async (pos) => {
+            (pos) => {
                 setLocation({
                     lat: pos.coords.latitude,
                     lng: pos.coords.longitude,
@@ -22,8 +23,9 @@ export default function MyLocationComp() {
 
     useEffect(() => {
         if (!location) return;
+
         setLoading(true);
-        async () => {
+        (async () => {
             try {
                 const [placeData, weatherData] = await Promise.all([
                     MyLocation(location.lat, location.lng),
@@ -36,7 +38,7 @@ export default function MyLocationComp() {
             } finally {
                 setLoading(false);
             }
-        };
+        })();
     }, [location]);
 
     if (loading) return <p>로딩 중</p>;
@@ -44,17 +46,21 @@ export default function MyLocationComp() {
     return (
         <div>
             <p>{place?.name_ko ?? place?.name ?? "-"}</p>
-            <p>{weather?.weather?.[0]?.description ?? "-"}</p>
-            <p>
-                {weather?.main?.temp != null
-                    ? `${Math.round(weather.main.temp)}°C`
-                    : "-"}
-            </p>
-            {/* <p>국가: {place?.country ?? "-"}</p>
-            <p>지역: {place?.state ?? "-"}</p>
-            <p>
-                좌표: {location?.lat?.toFixed(2)}, {location?.lng?.toFixed(2)}
-            </p> */}
+
+            {weather && (
+                <>
+                    <img
+                        src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                        alt="Weather icon"
+                    />
+                    <p>{weather?.weather?.[0]?.description ?? "-"}</p>
+                    <p>
+                        {weather?.main?.temp != null
+                            ? `${Math.round(weather.main.temp)}°C`
+                            : "-"}
+                    </p>
+                </>
+            )}
         </div>
     );
 }
