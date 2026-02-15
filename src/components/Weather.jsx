@@ -9,6 +9,8 @@ export default function Weather() {
     const [location, setLocation] = useState(null);
     const [loading, setLoading] = useState(true);
     const [switchObj, setSwitchObj] = useState("my");
+    // const [cityId, setCityId] = useState(CITIES[0].id);
+    // const [cityLabel, setCityLabel] = useState(CITIES[0].label);
 
     // 위치 불러오기
     useEffect(() => {
@@ -43,24 +45,33 @@ export default function Weather() {
     // 로딩
 
     // 구조 분해
-    const { weather, air } = weatherData;
-    const airPol = air?.list?.[0];
+    // const { weather, air } = weatherData;
+    // const airPol = air?.list?.[0];
     // 구조 분해
 
     // ------------------------------------- 렌더링 ------------------------------------------
 
     return (
         <>
+            {/* {CITIES.map((city) => (
+                <button
+                    key={city.id}
+                    onClick={() => {
+                        setCityId(city.id);
+                        setCityLabel(city.label);
+                        setSwitchObj("city");
+                    }}
+                >
+                    {city.label}
+                </button>
+            ))} */}
+
             <div>
                 <button onClick={() => setSwitchObj("my")}>현재 위치</button>
                 <button onClick={() => setSwitchObj("city")}>다른 도시</button>
             </div>
             {switchObj === "my" ? <MyLocationComp /> : <OtherCity />}
-
-            <h3>
-                ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-            </h3>
-            {weather && (
+            {/* {weather && (
                 <div>
                     <div>
                         <img
@@ -122,7 +133,7 @@ export default function Weather() {
                             : "오늘 눈 안옴"}
                     </p>
                 </div>
-            )}
+            )} */}
         </>
     );
 }

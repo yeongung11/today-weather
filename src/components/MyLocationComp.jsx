@@ -45,7 +45,7 @@ export default function MyLocationComp() {
 
     return (
         <div>
-            <p>{place?.name_ko ?? place?.name ?? "-"}</p>
+            <h1>{place?.name_ko ?? place?.name ?? "-"}</h1>
 
             {weather && (
                 <>
