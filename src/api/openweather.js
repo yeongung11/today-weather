@@ -19,7 +19,7 @@ import { OWM_API_KEY, OWM_BASE_URL } from "../library/env";
 //     return { weather, air };
 // }
 
-export async function SeoulWeather(param = "Seoul") {
+export async function CityWeather(param = "Seoul") {
     let weatherUrl;
     if (typeof param === "number") {
         weatherUrl = `${OWM_BASE_URL}/data/2.5/weather?id=${param}&appid=${OWM_API_KEY}&units=metric&lang=kr`;
@@ -56,10 +56,10 @@ export const MyLocation = async (lat, lng) => {
 };
 
 // 다른 도시
-export const OtherCity = (city = "Seoul") =>
-    fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${OWM_API_KEY}&units=metric&lang=kr`,
-    ).then((res) => res.json());
+// export const FetchOtherCity = (city = "Seoul") =>
+//     fetch(
+//         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${OWM_API_KEY}&units=metric&lang=kr`,
+//     ).then((res) => res.json());
 
 export const getWeatherByCoords = async (lat, lng) => {
     const url =

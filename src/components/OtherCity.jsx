@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { SeoulWeather } from "../api/openweather"; // city 인자 받게 이미 되어 있음
+import { CityWeather } from "../api/openweather"; // city 인자 받게 이미 되어 있음
 
 const CITIES = [
     { label: "서울", id: 1835848 },
@@ -19,7 +19,7 @@ export default function OtherCity() {
         const loadWeather = async () => {
             try {
                 setLoading(true);
-                const data = await SeoulWeather(city);
+                const data = await CityWeather(city);
                 if (!isCancelled) setData(data);
             } catch (e) {
                 if (!isCancelled) console.error(e);

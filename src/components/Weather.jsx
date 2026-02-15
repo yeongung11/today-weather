@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { OtherCity, SeoulWeather } from "../api/openweather";
+import { CityWeather, MyLocation } from "../api/openweather";
+import OtherCity from "./OtherCity";
 import MyLocationComp from "./MyLocationComp";
 
 export default function Weather() {
@@ -27,7 +28,7 @@ export default function Weather() {
 
     //날씨 불러오기
     useEffect(() => {
-        SeoulWeather()
+        CityWeather()
             .then((data) => {
                 console.log("날씨 데이터 + 미세먼지 데이터", data);
                 setWeatherData(data); // {weather, air}
@@ -53,9 +54,9 @@ export default function Weather() {
             <div>
                 <button onClick={() => setSwitchObj("my")}>현재 위치</button>
                 <button onClick={() => setSwitchObj("city")}>다른 도시</button>
-                
             </div>
             {switchObj === "my" ? <MyLocationComp /> : <OtherCity />}
+
             <h3>
                 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
             </h3>
