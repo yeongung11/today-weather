@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { getWeatherByCoords, MyLocation } from "../api/openweather";
+import { placeName, getCurrentCoords } from "../api/openweather";
 
 export default function MyLocationComp() {
     const [location, setLocation] = useState(null);
     const [place, setPlace] = useState(null);
     const [weather, setWeather] = useState(null);
+    const [air, setAir] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -27,12 +28,14 @@ export default function MyLocationComp() {
         setLoading(true);
         (async () => {
             try {
-                const [placeData, weatherData] = await Promise.all([
-                    MyLocation(location.lat, location.lng),
-                    getWeatherByCoords(location.lat, location.lng),
+                const [placeData, currentData] = await Promise.all([
+                    placeName(location.lat, location.lng),
+                    getCurrentCoords(location.lat, location.lng),
                 ]);
+
                 setPlace(placeData);
-                setWeather(weatherData);
+                setWeather(currentData.weather);
+                setAir(currentData.air);
             } catch (e) {
                 console.error("현재 위치 데이터 없음", e);
             } finally {
@@ -42,7 +45,7 @@ export default function MyLocationComp() {
     }, [location]);
 
     if (loading) return <p>로딩 중</p>;
-    // const airPol = air?.list?.[0];
+    const airPol = air?.list?.[0];
 
     return (
         <div>
@@ -60,7 +63,7 @@ export default function MyLocationComp() {
                             ? `${Math.round(weather.main.temp)}°C`
                             : "-"}
                     </p>
-                    {/* <p>
+                    <p>
                         초미세먼지 :
                         {airPol?.components?.pm2_5?.toFixed(1) ||
                             "초미세먼지 정보 없음"}
@@ -71,7 +74,7 @@ export default function MyLocationComp() {
                         {airPol?.components?.pm10?.toFixed(1) ||
                             "미세먼지 정보 없음"}
                         μg/m
-                    </p> */}
+                    </p>
                 </>
             )}
         </div>

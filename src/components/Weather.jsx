@@ -1,16 +1,13 @@
 import { useState, useEffect } from "react";
-import { CityWeather, MyLocation } from "../api/openweather";
+import { getCurrentCity } from "../api/openweather";
 import OtherCity from "./OtherCity";
 import MyLocationComp from "./MyLocationComp";
 
 export default function Weather() {
     const [weatherData, setWeatherData] = useState(null); // 아직 데이터가 없으므로 null openWeatherAPI는 객체를 반환하는데  { name: "Seoul", main: { temp: 15 }, weather: [...] }
-    // const [newCity, setNewCity] = useState("Seoul,KR");
     const [location, setLocation] = useState(null);
     const [loading, setLoading] = useState(true);
     const [switchObj, setSwitchObj] = useState("my");
-    // const [cityId, setCityId] = useState(CITIES[0].id);
-    // const [cityLabel, setCityLabel] = useState(CITIES[0].label);
 
     // 위치 불러오기
     useEffect(() => {
@@ -30,7 +27,7 @@ export default function Weather() {
 
     //날씨 불러오기
     useEffect(() => {
-        CityWeather()
+        getCurrentCity()
             .then((data) => {
                 console.log("날씨 데이터 + 미세먼지 데이터", data);
                 setWeatherData(data); // {weather, air}
