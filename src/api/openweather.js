@@ -46,13 +46,24 @@ export const placeName = async (lat, lng) => {
     };
 };
 
-// export const getForecast = async ({ cityId, lat, lng }) => {
-//   const url =
-//     cityId != null
-//       ? `${OWM_BASE_URL}/data/2.5/forecast?id=${cityId}&appid=${OWM_API_KEY}&units=metric&lang=kr`
-//       : `${OWM_BASE_URL}/data/2.5/forecast?lat=${lat}&lon=${lng}&appid=${OWM_API_KEY}&units=metric&lang=kr`;
+export const getForecast = async ({ cityId, q, lat, lng, cnt = 3 }) => {
+    let base = `${OWM_BASE_URL}/data/2.5/forecast`;
 
-//   return fetchJson(url, "예보 오류");
+    if (cityId != null) base += `?id=${cityId}`;
+    else if (q != null) base += `?q=${encodeURIComponent(q)}`;
+    else base += `?lat=${lat}&lon=${lng}`;
+    const url = `${base}&appid=${OWM_API_KEY}&units=metric&lang=kr&cnt=${cnt}`;
+    return fetchJson(url, "예보 오류");
+};
+
+// 날씨 예보
+// export const getForecast = async ({ q, cnt = 8 }) => {
+//     const url =
+//         `${OWM_BASE_URL}/data/2.5/forecast` +
+//         `?q=${encodeURIComponent(q)}` +
+//         `&appid=${OWM_API_KEY}&units=metric&lang=kr&cnt=${cnt}`;
+
+//     return fetchJson(url, "예보 오류");
 // };
 
 // export async function CityWeather(param = "Seoul") {

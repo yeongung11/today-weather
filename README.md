@@ -19,7 +19,7 @@
 -   npm install
 -   npm run dev
 
-Trouble Shooting
+`Trouble Shooting`
 
 ### 1.
 

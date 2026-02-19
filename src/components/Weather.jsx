@@ -1,26 +1,59 @@
 import { useState, useEffect } from "react";
-import { getCurrentCity } from "../api/openweather";
+import { getCurrentCity, getForecast } from "../api/openweather";
 import OtherCity from "./OtherCity";
 import MyLocationComp from "./MyLocationComp";
+import TimeWeather from "./TimeWeather";
 
 export default function Weather() {
+    const [forecast, setForecast] = useState(null);
     const [weatherData, setWeatherData] = useState(null); // 아직 데이터가 없으므로 null openWeatherAPI는 객체를 반환하는데  { name: "Seoul", main: { temp: 15 }, weather: [...] }
-    const [location, setLocation] = useState(null);
+    const [myLocation, setMyLocation] = useState(null);
     const [loading, setLoading] = useState(true);
     const [switchObj, setSwitchObj] = useState("my");
+    const [selectedCityQ, setSelectedCityQ] = useState(null);
+
+    // 단기 날씨 예보
+    useEffect(() => {
+        let ignore = false;
+
+        async function run() {
+            if (switchObj === "city") {
+                if (!selectedCityQ) return; // 400에러 방지
+                const data = await getForecast({
+                    q: selectedCityQ,
+                    cnt: 3,
+                });
+                if (!ignore) setForecast(data);
+                return;
+            }
+
+            if (!myLocation?.lat || !myLocation?.lng) return;
+            const data = await getForecast({
+                lat: myLocation.lat,
+                lng: myLocation.lng,
+                cnt: 3,
+            });
+            if (!ignore) setForecast(data);
+        }
+
+        run().catch(console.error);
+        return () => {
+            ignore = true;
+        };
+    }, [switchObj, selectedCityQ, myLocation?.lat, myLocation?.lng]);
 
     // 위치 불러오기
     useEffect(() => {
         if (!navigator.geolocation) return;
         navigator.geolocation.getCurrentPosition(
             (pos) =>
-                setLocation({
+                setMyLocation({
                     lat: pos.coords.latitude,
                     lng: pos.coords.longitude,
                 }),
             (error) => {
                 console.error("위치 에러:", error);
-                setLocation({ lat: 37.5665, lng: 126.978 });
+                setMyLocation({ lat: 37.5665, lng: 126.978 });
             },
         );
     }, []);
@@ -41,15 +74,21 @@ export default function Weather() {
     if (!weatherData) return <p>날씨 정보가 없습니다.</p>;
     // 로딩
 
-    // 구조 분해
-    // const { weather, air } = weatherData;
-    // const airPol = air?.list?.[0];
-    // 구조 분해
-
     // ------------------------------------- 렌더링 ------------------------------------------
 
     return (
         <>
+            <div>
+                <button onClick={() => setSwitchObj("my")}>현재 위치</button>
+                <button onClick={() => setSwitchObj("city")}>다른 도시</button>
+            </div>
+            {switchObj === "my" ? (
+                <MyLocationComp />
+            ) : (
+                <OtherCity onSelectCity={setSelectedCityQ} />
+            )}
+            <TimeWeather forecast={forecast} />
+
             {/* {CITIES.map((city) => (
                 <button
                     key={city.id}
@@ -62,12 +101,6 @@ export default function Weather() {
                     {city.label}
                 </button>
             ))} */}
-
-            <div>
-                <button onClick={() => setSwitchObj("my")}>현재 위치</button>
-                <button onClick={() => setSwitchObj("city")}>다른 도시</button>
-            </div>
-            {switchObj === "my" ? <MyLocationComp /> : <OtherCity />}
             {/* {weather && (
                 <div>
                     <div>
