@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getCurrentCity, getForecast } from "../api/openweather";
+import { get5Forecast, getCurrentCity, getForecast } from "../api/openweather";
 import OtherCity from "./OtherCity";
 import MyLocationComp from "./MyLocationComp";
 import TimeWeather from "./TimeWeather";
@@ -11,8 +11,32 @@ export default function Weather() {
     const [loading, setLoading] = useState(true);
     const [switchObj, setSwitchObj] = useState("my");
     const [selectedCityQ, setSelectedCityQ] = useState(null);
+    const [daily, SetDaily] = useState(null);
 
-    // 단기 날씨 예보
+    // 10일 날씨 예보
+    useEffect(() => {
+        let ignore = false;
+        async function run() {
+            const data =
+                switchObj === "city"
+                    ? await get5Forecast({ q: selectedCityQ })
+                    : await get5Forecast({
+                          lat: myLocation.lat,
+                          lon: myLocation.lng,
+                      });
+            if (!ignore) SetDaily(data);
+        }
+        if (switchObj === "city" && !selectedCityQ) return;
+        if (switchObj !== "city" && (!myLocation?.lat || !myLocation?.lng))
+            return;
+
+        run().catch(console.error);
+        return () => {
+            ignore = true;
+        };
+    }, [switchObj, selectedCityQ, myLocation?.lat, myLocation?.lng]);
+
+    // 3시간 날씨 예보
     useEffect(() => {
         let ignore = false;
 
