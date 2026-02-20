@@ -57,21 +57,20 @@ export const getForecast = async ({ cityId, q, lat, lng, cnt = 3 }) => {
     return fetchJson(url, "예보 오류");
 };
 
-// 10일 예보
+// 5일 예보
 export const get5Forecast = async ({ q, lat, lon }) => {
     const p = new URLSearchParams({
         appid: OWM_API_KEY,
         units: "metric",
         lang: "kr",
-        cnt: "10",
     });
     if (q) p.set("q", q);
     else {
         p.set("lat", String(lat));
         p.set("lon", String(lon));
     }
-    const url = `${OWM_BASE_URL}/data/2.5/forecast/daily?${p.toString()}`;
-    return fetchJson(url, "10일 예보 오류");
+    const url = `${OWM_BASE_URL}/data/2.5/forecast?${p.toString()}`;
+    return fetchJson(url, "5일 예보 오류");
 };
 
 // 날씨 예보

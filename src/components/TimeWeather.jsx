@@ -10,7 +10,7 @@ function formatHour(dt, timezoneSeconds) {
 
 export default function HourlyRow({ forecast }) {
     const tz = forecast?.city?.timezone ?? 0;
-    const hourly = forecast?.list ?? [];
+    const hourly = (forecast?.list ?? []).slice(0, 8);
     if (hourly.length === 0) return null;
     return (
         <div>
