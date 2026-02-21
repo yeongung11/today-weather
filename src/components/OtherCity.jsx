@@ -51,7 +51,7 @@ export default function OtherCity({ onSelectCity }) {
     const cityLabel = CITIES.find((c) => c.id === cityD)?.label ?? weather.name;
 
     return (
-        <div>
+        <div className="text-center justify-items-center">
             <div>
                 {CITIES.map((c) => (
                     <button key={c.id} onClick={() => setCityD(c.id)}>

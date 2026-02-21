@@ -48,21 +48,23 @@ export default function MyLocationComp() {
     const airPol = air?.list?.[0];
 
     return (
-        <div>
+        <div className="text-center justify-items-center mb-7">
             <h1>{place?.name_ko ?? place?.name ?? "-"}</h1>
 
             {weather && (
                 <>
-                    <img
-                        src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-                        alt="Weather icon"
-                    />
-                    <p>{weather?.weather?.[0]?.description ?? "-"}</p>
-                    <p>
-                        {weather?.main?.temp != null
-                            ? `${Math.round(weather.main.temp)}°C`
-                            : "-"}
-                    </p>
+                    <div className="flex flex-row items-center">
+                        <img
+                            src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                            alt="Weather icon"
+                        />
+                        {/* <p>{weather?.weather?.[0]?.description ?? "-"}</p> */}
+                        <p>
+                            {weather?.main?.temp != null
+                                ? `${Math.round(weather.main.temp)}°C`
+                                : "-"}
+                        </p>
+                    </div>
                     <p>
                         초미세먼지 :
                         {airPol?.components?.pm2_5?.toFixed(1) ||

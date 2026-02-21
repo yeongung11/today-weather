@@ -10,7 +10,7 @@ export default function DailyWeather({ forecast }) {
     if (!daily5.length) return null;
     console.log("cnt", forecast?.cnt, "len", forecast?.list?.length);
     return (
-        <div className="max-w-xl mx-auto space-y-2">
+        <div className="max-w-xl mx-auto space-y-2 justify-items-center">
             {daily5.map((d) => (
                 <div
                     key={d.date}
@@ -28,7 +28,7 @@ export default function DailyWeather({ forecast }) {
                             alt={d.desc ?? ""}
                         />
                     ) : null}
-                    <div className="text-sm text-gray-500 truncate min-w-0">
+                    <div className="text-sm text-white-500 truncate min-w-0">
                         {d.desc}
                     </div>
                     <div className="text-right whitespace-nowrap tabular-nums flex items-center">

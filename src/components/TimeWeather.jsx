@@ -13,7 +13,7 @@ export default function HourlyRow({ forecast }) {
     const hourly = (forecast?.list ?? []).slice(0, 16);
     if (hourly.length === 0) return null;
     return (
-        <div className="flex flex-row justify-center gap-7 overflow-x-auto py-2 ">
+        <div className="flex flex-row justify-center gap-7 overflow-x-auto py-2 mb-7">
             {hourly.map((item) => (
                 <div
                     key={item.dt}

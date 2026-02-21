@@ -77,19 +77,18 @@ export default function Weather() {
     // ------------------------------------- 렌더링 ------------------------------------------
 
     return (
-        <>
-            <div>
-                <button onClick={() => setSwitchObj("my")}>현재 위치</button>
-                <button onClick={() => setSwitchObj("city")}>다른 도시</button>
-            </div>
+        <div className=" mx-auto px-4 max-w-3xl text-amber-50">
             {switchObj === "my" ? (
                 <MyLocationComp />
             ) : (
                 <OtherCity onSelectCity={setSelectedCityQ} />
             )}
-
+            <div className="text-right space-x-2">
+                <button onClick={() => setSwitchObj("my")}>현재 위치</button>
+                <button onClick={() => setSwitchObj("city")}>다른 도시</button>
+            </div>
             <TimeWeather forecast={forecast} />
             <DailyWeather forecast={forecast} />
-        </>
+        </div>
     );
 }
