@@ -47,7 +47,7 @@ export const placeName = async (lat, lng) => {
 };
 
 // 3시간 간격 예보
-export const getForecast = async ({ cityId, q, lat, lng, cnt = 10 }) => {
+export const getForecast = async ({ cityId, q, lat, lng, cnt = 40 }) => {
     let base = `${OWM_BASE_URL}/data/2.5/forecast`;
 
     if (cityId != null) base += `?id=${cityId}`;
