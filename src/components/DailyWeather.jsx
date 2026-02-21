@@ -19,13 +19,8 @@ export default function DailyWeather({ forecast }) {
                     ) : null}
 
                     <div>
-                        {d.min == null ? "-" : Math.round(d.min)}° /{" "}
+                        최저 {d.min == null ? "-" : Math.round(d.min)}° / 최고{" "}
                         {d.max == null ? "-" : Math.round(d.max)}°
-                    </div>
-
-                    <div>
-                        {Math.round((d.pop ?? 0) * 100)}%
-                        {d.rainMm ? ` • ${d.rainMm.toFixed(1)}mm` : ""}
                     </div>
                 </div>
             ))}

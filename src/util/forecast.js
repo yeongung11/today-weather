@@ -6,9 +6,9 @@ export function Daily5Forecast(forecast) {
     for (const item of list) {
         const local = new Date((item.dt + tz) * 1000);
         // const year = local.getUTCFullYear();
-        const month = String(local.getUTCMonth() + 1).padStart(2, "0");
+        const month = String(local.getUTCMonth() + 1).padStart(2);
         const day = String(local.getUTCDate()).padStart(2, "0");
-        const key = `${month}-${day}`;
+        const key = `${month}.${day}`;
 
         if (!map.has(key)) map.set(key, []);
         map.get(key).push(item);

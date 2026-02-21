@@ -1,11 +1,12 @@
 import "./App.css";
 import Weather from "./components/weather";
-// import OtherCity from "./components/OtherCity";
+import Practice from "./components/Practice";
 
 function App() {
     return (
         <>
             <Weather />
+            {/* <Practice /> */}
         </>
     );
 }
