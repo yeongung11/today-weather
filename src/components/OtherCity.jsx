@@ -46,13 +46,13 @@ export default function OtherCity({ onSelectCity }) {
     if (loading) return <p>도시 날씨 불러오는 중...</p>;
     if (!data) return <p>날씨 정보가 없습니다.</p>;
 
-    const { weather, air } = data;
-    const airPol = air?.list?.[0];
+    const { weather } = data;
+    // const airPol = air?.list?.[0];
     const cityLabel = CITIES.find((c) => c.id === cityD)?.label ?? weather.name;
 
     return (
-        <div className="text-center justify-items-center">
-            <div>
+        <div className="text-center justify-items-center text-2xl">
+            <div className="">
                 {CITIES.map((c) => (
                     <button key={c.id} onClick={() => setCityD(c.id)}>
                         {c.label}
@@ -61,13 +61,15 @@ export default function OtherCity({ onSelectCity }) {
             </div>
 
             <h1>{cityLabel}</h1>
-            <img
-                src={`https://openweathermap.org/img/wn/${weather.weather?.[0]?.icon}@2x.png`}
-                alt="Weather icon"
-            />
-            <p>{weather.weather?.[0]?.description}</p>
-            <p>{Math.round(weather.main.temp)} °C</p>
-            <p>
+            <div className="flex flex-row items-center">
+                <img
+                    src={`https://openweathermap.org/img/wn/${weather.weather?.[0]?.icon}@2x.png`}
+                    alt="Weather icon"
+                />
+                {/* <p>{weather.weather?.[0]?.description}</p> */}
+                <p>{Math.round(weather.main.temp)} °C</p>
+            </div>
+            {/* <p>
                 초미세먼지 :
                 {airPol?.components?.pm2_5?.toFixed(1) ||
                     "초미세먼지 정보 없음"}
@@ -77,7 +79,7 @@ export default function OtherCity({ onSelectCity }) {
                 미세먼지 :
                 {airPol?.components?.pm10?.toFixed(1) || "미세먼지 정보 없음"}
                 μg/m
-            </p>
+            </p> */}
         </div>
     );
 }

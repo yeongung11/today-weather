@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { getCurrentCity, getForecast } from "../api/openweather";
+import { getCurrentCity, getForecast, getAir } from "../api/openweather";
 import OtherCity from "./OtherCity";
 import MyLocationComp from "./MyLocationComp";
 import TimeWeather from "./TimeWeather";
 import DailyWeather from "./DailyWeather";
-// import AirPol from "./AirPol";
+import AirPol from "./AirPol";
 
 export default function Weather() {
     const [forecast, setForecast] = useState(null);
@@ -13,7 +13,38 @@ export default function Weather() {
     const [loading, setLoading] = useState(true);
     const [switchObj, setSwitchObj] = useState("my");
     const [selectedCityQ, setSelectedCityQ] = useState(null);
-    // const [view, setView] = useState("weather");
+    const [view, setView] = useState("weather");
+    const [airPol, setAirPol] = useState(null);
+
+    useEffect(() => {
+        let ignore = false;
+
+        async function run() {
+            // 현재 위치
+            if (switchObj === "my") {
+                if (!myLocation?.lat || !myLocation?.lng) return;
+                const airData = await getAir({
+                    lat: myLocation.lat,
+                    lon: myLocation.lng,
+                });
+                if (!ignore) setAirPol(airData);
+                return;
+            }
+
+            // 다른 도시 : q -> lat/lon -> air
+            if (switchObj === "city") {
+                if (!selectedCityQ) return;
+
+                const { air } = await getCurrentCity(selectedCityQ);
+                if (!ignore) setAirPol(air);
+            }
+        }
+
+        run().catch(console.error);
+        return () => {
+            ignore = true;
+        };
+    }, [switchObj, selectedCityQ, myLocation?.lat, myLocation?.lng]);
 
     // 3시간 날씨 예보
     useEffect(() => {
@@ -93,16 +124,13 @@ export default function Weather() {
                 <button onClick={() => setSwitchObj("my")}>현재 위치</button>
                 <button onClick={() => setSwitchObj("city")}>다른 도시</button>
             </div>
-
-            <TimeWeather forecast={forecast} />
-            <DailyWeather forecast={forecast} />
-            {/* {view === "weather" && (
+            {view === "weather" && (
                 <>
                     <TimeWeather forecast={forecast} />
                     <DailyWeather forecast={forecast} />
                 </>
-            )} */}
-            {/* {view === "air" && <AirPol airPol={air?.list?.[0]} />} */}
+            )}
+            {view === "air" && <AirPol airPol={airPol?.list?.[0]} />}
         </div>
     );
 }
