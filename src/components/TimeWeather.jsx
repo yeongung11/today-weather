@@ -9,9 +9,9 @@ function formatHour(dt, timezoneSeconds) {
 }
 
 export default function HourlyRow({ forecast }) {
-    const tz = forecast?.city?.timezone ?? 0;
-    const hourly = (forecast?.list ?? []).slice(0, 16);
-    if (hourly.length === 0) return null;
+    const tz = forecast?.city?.timezone ?? 0; // timezone이 있으면 쓰고 없으면 0
+    const hourly = (forecast?.list ?? []).slice(0, 16); // 배열 앞에서 16개만 잘라서 가져옴
+    if (hourly.length === 0) return null; // 데이터가 없으면 종료
     return (
         <div className="flex flex-row justify-center gap-7 overflow-x-auto py-2 mb-7">
             {hourly.map((item) => (

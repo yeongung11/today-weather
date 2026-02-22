@@ -78,7 +78,6 @@ export default function OtherCity({ onSelectCity }) {
                 {airPol?.components?.pm10?.toFixed(1) || "미세먼지 정보 없음"}
                 μg/m
             </p>
-            {/* <p>aqi{airPol?.main?.aqi ?? "N/A"}</p> */}
         </div>
     );
 }

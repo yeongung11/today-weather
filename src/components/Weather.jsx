@@ -4,6 +4,7 @@ import OtherCity from "./OtherCity";
 import MyLocationComp from "./MyLocationComp";
 import TimeWeather from "./TimeWeather";
 import DailyWeather from "./DailyWeather";
+// import AirPol from "./AirPol";
 
 export default function Weather() {
     const [forecast, setForecast] = useState(null);
@@ -12,7 +13,7 @@ export default function Weather() {
     const [loading, setLoading] = useState(true);
     const [switchObj, setSwitchObj] = useState("my");
     const [selectedCityQ, setSelectedCityQ] = useState(null);
-    const [, SetDaily] = useState(null);
+    // const [view, setView] = useState("weather");
 
     // 3시간 날씨 예보
     useEffect(() => {
@@ -73,6 +74,9 @@ export default function Weather() {
     if (loading) return <p>날씨 불러오는 중...</p>;
     if (!weatherData) return <p>날씨 정보가 없습니다.</p>;
     // 로딩
+    const air = weatherData?.air;
+    console.log("air", air);
+    console.log("air first", air?.list?.[0]);
 
     // ------------------------------------- 렌더링 ------------------------------------------
 
@@ -84,11 +88,21 @@ export default function Weather() {
                 <OtherCity onSelectCity={setSelectedCityQ} />
             )}
             <div className="text-right space-x-2">
+                <button onClick={() => setView("weather")}>날씨</button>
+                <button onClick={() => setView("air")}>미세먼지</button>
                 <button onClick={() => setSwitchObj("my")}>현재 위치</button>
                 <button onClick={() => setSwitchObj("city")}>다른 도시</button>
             </div>
+
             <TimeWeather forecast={forecast} />
             <DailyWeather forecast={forecast} />
+            {/* {view === "weather" && (
+                <>
+                    <TimeWeather forecast={forecast} />
+                    <DailyWeather forecast={forecast} />
+                </>
+            )} */}
+            {/* {view === "air" && <AirPol airPol={air?.list?.[0]} />} */}
         </div>
     );
 }
