@@ -5,7 +5,6 @@ export function Daily5Forecast(forecast) {
     const map = new Map(); //
     for (const item of list) {
         const local = new Date((item.dt + tz) * 1000);
-        // const year = local.getUTCFullYear();
         const month = String(local.getUTCMonth() + 1).padStart(2);
         const day = String(local.getUTCDate()).padStart(2, "0");
         const key = `${month}.${day}`;

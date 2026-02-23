@@ -58,9 +58,9 @@ export default function MyLocationComp() {
                             src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
                             alt="Weather icon"
                         />
-                        <p>
+                        <p className="text-6xl">
                             {weather?.main?.temp != null
-                                ? `${Math.round(weather.main.temp)}°C`
+                                ? `${Math.round(weather.main.temp)} °`
                                 : "-"}
                         </p>
                     </div>

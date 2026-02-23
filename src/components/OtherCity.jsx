@@ -66,20 +66,8 @@ export default function OtherCity({ onSelectCity }) {
                     src={`https://openweathermap.org/img/wn/${weather.weather?.[0]?.icon}@2x.png`}
                     alt="Weather icon"
                 />
-                {/* <p>{weather.weather?.[0]?.description}</p> */}
-                <p>{Math.round(weather.main.temp)} °C</p>
+                <p className="text-6xl">{Math.round(weather.main.temp)} °</p>
             </div>
-            {/* <p>
-                초미세먼지 :
-                {airPol?.components?.pm2_5?.toFixed(1) ||
-                    "초미세먼지 정보 없음"}
-                μg/m
-            </p>
-            <p>
-                미세먼지 :
-                {airPol?.components?.pm10?.toFixed(1) || "미세먼지 정보 없음"}
-                μg/m
-            </p> */}
         </div>
     );
 }

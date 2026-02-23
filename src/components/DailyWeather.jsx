@@ -10,14 +10,14 @@ export default function DailyWeather({ forecast }) {
     if (!daily5.length) return null;
     console.log("cnt", forecast?.cnt, "len", forecast?.list?.length);
     return (
-        <div className="max-w-xl mx-auto space-y-2 justify-items-center">
+        <div className="max-w-xl mx-auto space-y-2 justify-items-center text-xl">
             {daily5.map((d) => (
                 <div
                     key={d.date}
                     className="grid items-center justify-items-center gap-3 py-2 grid-cols-[72px_44px_44px_minmax(0,180px)_80px]"
                 >
                     <div>{weekdayKoFromMmDd(d.date)}</div>
-                    <div className="text-sm leading-tight whitespace-nowrap">
+                    <div className=" leading-tight whitespace-nowrap">
                         {d.date}
                     </div>
 
