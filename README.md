@@ -11,7 +11,7 @@
 
 기술 스택
 
--   React, Vite, Tailwind(추가 예정), Axios(예정), Fetch
+-   React, Vite, Tailwind, Axios(예정), Fetch
 -   API : OpenWeatherMap
 
 시작 방법
@@ -23,7 +23,7 @@
 
 ### 1.
 
-에러 코드
+에러
 
 -   `import.meta.env.VITE_OWM_API_KEY`가 `undefined`로 찍혀 화면에 표시 되지 않았음.
 
@@ -37,7 +37,7 @@
 
 ### 2.
 
-에러코드
+에러
 
 -   `Cannot read properties of undefined (reading 'temp')` 렌더링 에러 `weatherData.main.temp`에 접근시 `undefined`에러
 
@@ -56,7 +56,7 @@
 
 ### 3.
 
-에러코드
+에러
 
 -   `Cannot access 'weather' before initialization` 구조 분해 에러
 
@@ -71,7 +71,7 @@
 
 ### 4.
 
-에러 코드
+에러
 
 원인
 
@@ -82,7 +82,7 @@
 
 ### 5.
 
-에러 코드
+에러
 
 원인
 
@@ -90,12 +90,24 @@
 
 해결
 
--   openweather.js에 있는 함수도 같이 사용될 수 있게 현재 위치의 좌표만 가져오는 함수를 추가
+-   `openweather.js`에 있는 함수도 같이 사용될 수 있게 현재 위치의 좌표만 가져오는 함수를 추가
 
 ### 6.
 
-에러 코드
+에러
+
+-   첫 로딩시에 현재 위치의 미세먼지 데이터가 정상적으로 출력 실패
 
 원인
 
+-   `navigator.geolocation.getCurrentPosition` 비동기라서 첫 렌더링시 `lat/lon`이 `null` 또는 `0`이 되는 경우
+-   `getcCurrentCity()`가 먼저 실행돼 다른 도시의 미세먼지 데이터가 출력
+-   `useEffect`는 병렬 시행이라 순서가 보장 안되서 현재 위치나 다른 도시의 순서가 따로 없음
+-   `myLocation?.lat, myLocation?.lng` 리액트 옵셔널 체이닝은 `?.`을 제대로 인식하지 못해 트리거 되지 못함
+-   `wrong latitude` 에러로 `API 400 Bad Request`가 생김
+
 해결
+
+-   `lat, lon`과 같이 우회
+-   `myLocation` 전체 객체를 넣어 객체 참조가 바뀌면 `useEffect`재실행
+-   `getAir({lat: myLocation, lon: myLocation})`을 `getAir(lat, lon)`으로 변경

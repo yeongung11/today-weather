@@ -2,9 +2,20 @@ import { OWM_API_KEY, OWM_BASE_URL } from "../library/env";
 
 // API, URL을 받으면 fetch해서 JSON으로 변환 해주는 함수
 const fetchJson = async (url, apiError = "API 에러") => {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`${apiError} ${res.status}`);
-    return res.json();
+    try {
+        const res = await fetch(url);
+        if (!res.ok) {
+            const errorText = await res.text();
+            console.error(`${apiError} [${res.status}]: errorText`);
+            throw new Error(
+                `${apiError} ${res.status}: ${errorText.slice(0, 200)}`,
+            );
+        }
+        return res.json();
+    } catch (error) {
+        console.error("fetchjson 에러", error);
+        throw error;
+    }
 };
 // 미세먼지 데이터
 export const getAir = async (lat, lon) => {

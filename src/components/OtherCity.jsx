@@ -2,15 +2,15 @@ import { useState, useEffect } from "react";
 import { getCurrentCity } from "../api/openweather";
 
 const CITIES = [
-    { label: "서울 특별시", id: "Seoul, KR" },
-    { label: "부산 광역시", id: "Busan, KR" },
-    { label: "대전 광역시", id: "Daejeon, KR" },
-    { label: "대구 광역시", id: "Daegu, KR" },
-    { label: "광주 광역시", id: "Gwangju, KR" },
-    { label: "인천 광역시", id: "Incheon, KR" },
-    { label: "세종 특별자치시", id: "Sejong, KR" },
-    { label: "제주도", id: "Jeju City, KR" },
-    { label: "울산 광역시", id: "Ulsan, KR" },
+    { label: "서울", id: "Seoul, KR" },
+    { label: "부산", id: "Busan, KR" },
+    { label: "대전", id: "Daejeon, KR" },
+    { label: "대구", id: "Daegu, KR" },
+    { label: "광주", id: "Gwangju, KR" },
+    { label: "인천", id: "Incheon, KR" },
+    { label: "세종", id: "Sejong, KR" },
+    { label: "제주", id: "Jeju City, KR" },
+    { label: "울산", id: "Ulsan, KR" },
 ];
 
 export default function OtherCity({ onSelectCity }) {
@@ -52,9 +52,13 @@ export default function OtherCity({ onSelectCity }) {
 
     return (
         <div className="text-center justify-items-center text-2xl">
-            <div className="">
+            <div className="fixed top-6 right-6 z-50">
                 {CITIES.map((c) => (
-                    <button key={c.id} onClick={() => setCityD(c.id)}>
+                    <button
+                        className="w-15 h-15 rounded-full bg-white/20 backdrop-blur-sm text-sm text-white flex items-center justify-center shadow-lg hover:bg-white/30"
+                        key={c.id}
+                        onClick={() => setCityD(c.id)}
+                    >
                         {c.label}
                     </button>
                 ))}

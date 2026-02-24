@@ -28,7 +28,7 @@ export default function AirPanel({ airPol }) {
         return "text-slate-300";
     }
     return (
-        <div className="text-center justify-items-center mb-7 text-2xl">
+        <div className="text-center justify-items-center mt-3 mb-7 text-2xl">
             <p>
                 초미세먼지:{" "}
                 {pm25 != null ? (

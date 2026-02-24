@@ -1,6 +1,5 @@
 function formatHour(dt, timezoneSeconds) {
     const d = new Date((dt + timezoneSeconds) * 1000);
-
     return d.toLocaleTimeString("ko-KR", {
         hour: "2-digit",
         hour12: false,
@@ -22,7 +21,7 @@ function onWheel(e) {
     const wheelSpeed = 0.1;
     if (e.deltaY === 0) return;
     e.currentTarget.scrollLeft += e.deltaY * wheelSpeed;
-    e.preventDefault();
+    // e.preventDefault();
 }
 
 function dateKey(dt, tz) {
@@ -35,11 +34,15 @@ function dateKey(dt, tz) {
 
 export default function HourlyRow({ forecast }) {
     const tz = forecast?.city?.timezone ?? 0;
-    const hourly = (forecast?.list ?? []).slice();
+    const hourly = (forecast?.list ?? []).slice(0, 16);
     if (hourly.length === 0) return null;
 
     return (
         <div
+            style={{
+                overscrollBehaviorX: "contain", // 기본 스크롤 방지
+                touchAction: "pan-x", // 터치 스크롤만 허용
+            }}
             onWheel={onWheel}
             className="flex flex-row justify-center gap-7 overflow-x-auto scrollbar-hide py-2 mb-7 mt-5"
         >
@@ -60,7 +63,6 @@ export default function HourlyRow({ forecast }) {
                         )}
 
                         <div>{formatHour(item.dt, tz)}</div>
-
                         <img
                             src={`https://openweathermap.org/img/wn/${item.weather?.[0]?.icon}.png`}
                             alt={item.weather?.[0]?.description ?? ""}

@@ -23,10 +23,10 @@ export default function Weather() {
             // 현재 위치
             if (switchObj === "my") {
                 if (!myLocation?.lat || !myLocation?.lng) return;
-                const airData = await getAir({
-                    lat: myLocation.lat,
-                    lon: myLocation.lng,
-                });
+                const airData = await getAir(
+                    myLocation.lat,
+                    myLocation.lng,
+                );
                 if (!ignore) setAirPol(airData);
                 return;
             }
@@ -44,7 +44,7 @@ export default function Weather() {
         return () => {
             ignore = true;
         };
-    }, [switchObj, selectedCityQ, myLocation?.lat, myLocation?.lng]);
+    }, [switchObj, selectedCityQ, myLocation]);
 
     // 3시간 날씨 예보
     useEffect(() => {
@@ -72,7 +72,7 @@ export default function Weather() {
         return () => {
             ignore = true;
         };
-    }, [switchObj, selectedCityQ, myLocation?.lat, myLocation?.lng]);
+    }, [switchObj, selectedCityQ, myLocation]);
 
     // 위치 불러오기
     useEffect(() => {
@@ -85,7 +85,7 @@ export default function Weather() {
                 }),
             (error) => {
                 console.error("위치 에러:", error);
-                setMyLocation({ lat: 37.5665, lng: 126.978 });
+                setMyLocation({ lat: 37.4012, lng: 126.9285 });
             },
         );
     }, []);
@@ -105,9 +105,6 @@ export default function Weather() {
     if (loading) return <p>날씨 불러오는 중...</p>;
     if (!weatherData) return <p>날씨 정보가 없습니다.</p>;
     // 로딩
-    const air = weatherData?.air;
-    console.log("air", air);
-    console.log("air first", air?.list?.[0]);
 
     // ------------------------------------- 렌더링 ------------------------------------------
 
@@ -130,7 +127,12 @@ export default function Weather() {
                     <DailyWeather forecast={forecast} />
                 </>
             )}
-            {view === "air" && <AirPol airPol={airPol?.list?.[0]} />}
+            {view === "air" &&
+                (airPol ? (
+                    <AirPol airPol={airPol?.list?.[0]} />
+                ) : (
+                    <p>미세먼지 불러오는 중</p>
+                ))}
         </div>
     );
 }
