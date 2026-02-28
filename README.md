@@ -3,23 +3,34 @@
 소개
 
 -   지역별로 날씨를 볼 수있는 페이지 입니다.
--   제가 원하는 정보만 간단하게 얻기 위해 만들었습니다.
 
-주요기능
-
--   지역별 날씨 조회(온도, 습도, 기온 등)
+-   GitHub: https://github.com/yeongung11/today-weather
+-   Demo: today-weather-ten.vercel.app
 
 기술 스택
 
--   React, Vite, Tailwind, Fetch
+-   React
+-   Vite
+-   Tailwind CSS
+-   Vercel
 -   API : OpenWeatherMap
+
+주요기능
+
+-   현재 위치 날씨: Geolocation API로 현재 위치 날씨 제공
+-   선택 도시 날씨: 선택한 도시 온도 및 날씨 확인
+-   시간별 예보: 3시간마다 온도 및 날씨 아이콘 제공
+-   일간 날씨: 요일별 최저, 최고 기온 및 날씨 아이콘 제공
+-   미세먼지: 현재 위치 및 선택 도시 초미세먼지, 미세먼지 데이터 제공
 
 시작 방법
 
--   npm install
--   npm run dev
+git clone https://github.com/yeongung11/today-weather.git
+cd today-weather
+npm install
+npm run dev
 
-`Trouble Shooting`
+Trouble Shooting
 
 ### 1.
 
