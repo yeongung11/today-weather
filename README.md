@@ -5,7 +5,7 @@
 -   지역별로 날씨를 볼 수있는 페이지 입니다.
 
 -   GitHub: https://github.com/yeongung11/today-weather
--   Demo: today-weather-ten.vercel.app
+-   Demo: https://today-weather-git-main-yeongung11s-projects.vercel.app
 
 기술 스택
 
@@ -25,10 +25,12 @@
 
 시작 방법
 
+```bash
 git clone https://github.com/yeongung11/today-weather.git
 cd today-weather
 npm install
 npm run dev
+```
 
 Trouble Shooting
 
