@@ -8,7 +8,6 @@ function iconUrl(icon) {
 export default function DailyWeather({ forecast }) {
     const daily5 = Daily5Forecast(forecast);
     if (!daily5.length) return null;
-    console.log("cnt", forecast?.cnt, "len", forecast?.list?.length);
     return (
         <div className="max-w-xl mx-auto space-y-2 justify-items-center text-xl">
             {daily5.map((d) => (
@@ -31,10 +30,12 @@ export default function DailyWeather({ forecast }) {
                     <div className="text-sm text-white-500 truncate min-w-0">
                         {d.desc}
                     </div>
-                    <div className="text-right whitespace-nowrap tabular-nums flex items-center">
-                        <span>{d.min == null ? "-" : Math.round(d.min)}°</span>
-                        <span className="ml-3">
-                            {d.max == null ? "-" : Math.round(d.max)}°
+                    <div className="text-right whitespace-nowrap tabular-nums flex items-center gap-3">
+                        <span className="inline-block w-8 text-right">
+                            {d.min == null ? "-" : Math.round(d.min)} °
+                        </span>
+                        <span className="inline-block w-8 text-right">
+                            {d.max == null ? "-" : Math.round(d.max)} °
                         </span>
                     </div>
                 </div>

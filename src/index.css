@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
 
 @layer utilities {
     .scrollbar-hide::-webkit-scrollbar {
@@ -8,5 +9,9 @@
     .scrollbar-hide {
         -ms-overflow-style: none;
         scrollbar-width: none;
+    }
+
+    body {
+        font-family: "Pretendard", sans-serif;
     }
 }

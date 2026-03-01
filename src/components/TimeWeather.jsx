@@ -21,7 +21,6 @@ function onWheel(e) {
     const wheelSpeed = 0.1;
     if (e.deltaY === 0) return;
     e.currentTarget.scrollLeft += e.deltaY * wheelSpeed;
-    // e.preventDefault();
 }
 
 function dateKey(dt, tz) {
@@ -40,8 +39,8 @@ export default function HourlyRow({ forecast }) {
     return (
         <div
             style={{
-                overscrollBehaviorX: "contain", // 기본 스크롤 방지
-                touchAction: "pan-x", // 터치 스크롤만 허용
+                overscrollBehaviorX: "contain",
+                touchAction: "pan-x",
             }}
             onWheel={onWheel}
             className="flex flex-row justify-center gap-7 overflow-x-auto scrollbar-hide py-2 mb-7 mt-5"

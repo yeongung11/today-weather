@@ -15,7 +15,7 @@ const CITIES = [
 
 export default function OtherCity({ onSelectCity }) {
     const [cityD, setCityD] = useState(CITIES[0].id);
-    const [data, setData] = useState(null); // { weather, air }
+    const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -43,11 +43,18 @@ export default function OtherCity({ onSelectCity }) {
         };
     }, [cityD]);
 
-    if (loading) return <p>도시 날씨 불러오는 중...</p>;
-    if (!data) return <p>날씨 정보가 없습니다.</p>;
+    if (loading)
+        return (
+            <p className="text-center text-amber-50">
+                도시 날씨 불러오는 중...
+            </p>
+        );
+    if (!data)
+        return (
+            <p className="text-center text-amber-50">날씨 정보가 없습니다.</p>
+        );
 
     const { weather } = data;
-    // const airPol = air?.list?.[0];
     const cityLabel = CITIES.find((c) => c.id === cityD)?.label ?? weather.name;
 
     return (

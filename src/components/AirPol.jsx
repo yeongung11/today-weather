@@ -30,10 +30,10 @@ export default function AirPanel({ airPol }) {
     return (
         <div className="text-center justify-items-center mt-3 mb-7 text-2xl">
             <p>
-                초미세먼지:{" "}
+                초미세먼지:
                 {pm25 != null ? (
                     <>
-                        {pm25.toFixed(1)} μg/m³{" "}
+                        {pm25.toFixed(1)} μg/m³
                         <span className={ColorGrade(pm25Grade)}>
                             {pm25Grade}
                         </span>
@@ -43,10 +43,10 @@ export default function AirPanel({ airPol }) {
                 )}
             </p>
             <p>
-                미세먼지:{" "}
+                미세먼지:
                 {pm10 != null ? (
                     <>
-                        {pm10.toFixed(1)} μg/m³{" "}
+                        {pm10.toFixed(1)} μg/m³
                         <span className={ColorGrade(pm10Grade)}>
                             {pm10Grade}
                         </span>

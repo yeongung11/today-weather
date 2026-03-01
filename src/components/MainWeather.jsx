@@ -8,7 +8,7 @@ import AirPol from "./AirPol";
 
 export default function Weather() {
     const [forecast, setForecast] = useState(null);
-    const [weatherData, setWeatherData] = useState(null); // 아직 데이터가 없으므로 null openWeatherAPI는 객체를 반환하는데  { name: "Seoul", main: { temp: 15 }, weather: [...] }
+    const [weatherData, setWeatherData] = useState(null);
     const [myLocation, setMyLocation] = useState(null);
     const [loading, setLoading] = useState(true);
     const [switchObj, setSwitchObj] = useState("my");
@@ -23,15 +23,10 @@ export default function Weather() {
             // 현재 위치
             if (switchObj === "my") {
                 if (!myLocation?.lat || !myLocation?.lng) return;
-                const airData = await getAir(
-                    myLocation.lat,
-                    myLocation.lng,
-                );
+                const airData = await getAir(myLocation.lat, myLocation.lng);
                 if (!ignore) setAirPol(airData);
                 return;
             }
-
-            // 다른 도시 : q -> lat/lon -> air
             if (switchObj === "city") {
                 if (!selectedCityQ) return;
 
@@ -102,8 +97,12 @@ export default function Weather() {
     }, []); // 도시가 바뀔 때 마다 새로고침
 
     // 로딩
-    if (loading) return <p>날씨 불러오는 중...</p>;
-    if (!weatherData) return <p>날씨 정보가 없습니다.</p>;
+    if (loading)
+        return <p className="text-center text-amber-50">날씨 불러오는 중...</p>;
+    if (!weatherData)
+        return (
+            <p className="text-center text-amber-50">날씨 정보가 없습니다.</p>
+        );
     // 로딩
 
     // ------------------------------------- 렌더링 ------------------------------------------
@@ -131,7 +130,9 @@ export default function Weather() {
                 (airPol ? (
                     <AirPol airPol={airPol?.list?.[0]} />
                 ) : (
-                    <p>미세먼지 불러오는 중</p>
+                    <p className="text-center text-amber-50">
+                        미세먼지 불러오는 중
+                    </p>
                 ))}
         </div>
     );

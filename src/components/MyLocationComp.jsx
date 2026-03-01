@@ -44,7 +44,7 @@ export default function MyLocationComp() {
         })();
     }, [location]);
 
-    if (loading) return <p>로딩 중</p>;
+    if (loading) return <p className="text-center text-amber-50">로딩 중</p>;
 
     return (
         <div className="text-center justify-items-center mb-7 text-2xl">
